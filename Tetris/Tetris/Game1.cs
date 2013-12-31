@@ -19,6 +19,19 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        int blockSize;
+
+        // Tetris area variables
+        Boolean[] locArray;
+        int xTiles;
+        int yTiles;
+
+        // Play area variables
+        int playAreaX;
+        int playAreaY;
+        int playAreaWidth;
+        int playAreaHeight;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,7 +51,21 @@ namespace Tetris
             base.Initialize();
 
             // Change to 800 by 600
-            
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
+
+            locArray= new Boolean[xTiles * yTiles];
+            blockSize = 5;
+
+            // Tetris area variables
+            xTiles = 10;
+            yTiles = 20;
+
+            // Play area variables
+            playAreaX = 10;
+            playAreaY = 10;
+            playAreaWidth = xTiles * blockSize;
+            playAreaHeight = xTiles * blockSize;
         }
 
         /// <summary>
