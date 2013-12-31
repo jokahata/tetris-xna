@@ -19,7 +19,133 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        
+        //Use a 2 dimensional array that holds a jagged array to represent each piece
+        int[,][] pieces = 
+        {
+                /*0: Square Block*/
+                          { new int[] {0, 1, 1, 0,
+                                       0, 1, 1, 0,
+                                       0, 0, 0, 0},
+
+                            new int[] {0, 1, 1, 0,
+                                       0, 1, 1, 0,
+                                       0, 0, 0, 0},
+
+                            new int[] {0, 1, 1, 0,
+                                       0, 1, 1, 0,
+                                       0, 0, 0, 0},
+
+                            new int[] {0, 1, 1, 0,
+                                       0, 1, 1, 0,
+                                       0, 0, 0, 0}},
+
+                /*1: Straight block*/
+                           {new int[] {0, 0, 0, 0,
+                                       1, 1, 1, 1,
+                                       0, 0, 0, 0,
+                                       0, 0, 0, 0},
+
+                            new int[] {0, 0, 1, 0,
+                                       0, 0, 1, 0,
+                                       0, 0, 1, 0,
+                                       0, 0, 1, 0},
+
+                            new int[] {0, 0, 0, 0,
+                                       0, 0, 0, 0,
+                                       1, 1, 1, 1,
+                                       0, 0, 0, 0,},
+
+                            new int[] {0, 1, 0, 0,
+                                       0, 1, 0, 0,
+                                       0, 1, 0, 0,
+                                       0, 1, 0, 0}},
+
+                /*2: Right L Block*/
+                           {new int[] {1, 0, 0,
+                                       1, 1, 1,
+                                       0, 0, 0},
+
+                            new int[] {0, 1, 1,
+                                       0, 1, 0,
+                                       0, 1, 0},
+
+                            new int[] {0, 0, 0,
+                                       1, 1, 1,
+                                       0, 0, 1},
+
+                            new int[] {0, 1, 0,
+                                       0, 1, 0,
+                                       1, 1, 0}},
+
+            /*3: Left L Block*/
+                           {new int[] {0, 0, 1,
+                                       1, 1, 1,
+                                       0, 0, 0},
+
+                            new int[] {0, 1, 0,
+                                       0, 1, 0,
+                                       0, 1, 1},
+
+                            new int[] {0, 0, 0,
+                                       1, 1, 1,
+                                       1, 0, 0},
+
+                            new int[] {1, 1, 0,
+                                       0, 1, 0,
+                                       0, 1, 0}},
+
+                /*4: Right Z Block*/
+                          { new int[] {0, 1, 1,
+                                       1, 1, 0,
+                                       0, 0, 0},
+
+                            new int[] {0, 1, 0,
+                                       0, 1, 1,
+                                       0, 0, 1},
+
+                            new int[] {0, 0, 0,
+                                       0, 1, 1,
+                                       1, 1, 0},
+
+                            new int[] {1, 0, 0,
+                                       1, 1, 0,
+                                       0, 1, 0}},
+
+                /*5: T Block*/
+                          { new int[] {0, 1, 0,
+                                       1, 1, 1,
+                                       0, 0, 0},
+
+                            new int[] {0, 1, 0,
+                                       0, 1, 1,
+                                       0, 1, 0},
+
+                            new int[] {0, 0, 0,
+                                       1, 1, 1,
+                                       0, 1, 0},
+
+                            new int[] {0, 1, 0,
+                                       1, 1, 0,
+                                       0, 1, 0}},
+
+                /*6: Left Z Block*/
+                          { new int[] {1, 1, 0,
+                                       0, 1, 1,
+                                       0, 0, 0},
+
+                            new int[] {0, 0, 1, 
+                                       0, 1, 1,
+                                       0, 1, 0},
+
+                            new int[] {0, 0, 0, 
+                                       1, 1, 0,
+                                       0, 1, 1},
+
+                            new int[] {0, 1, 0,
+                                       1, 1, 0,
+                                       1, 0, 0}}
+
+        };
 
         int blockSize;
 
@@ -33,6 +159,9 @@ namespace Tetris
         Vector2 playAreaLocation = new Vector2(25, 25);
         int playAreaWidth;
         int playAreaHeight;
+
+        //Sprites
+        Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6;
 
         public Game1()
         {
@@ -84,7 +213,7 @@ namespace Tetris
 
 
             playArea = Content.Load<Texture2D>("playArea");
-
+            sprite0 = Content.Load<Texture2D>("block0");
         }
 
         /// <summary>
@@ -130,6 +259,7 @@ namespace Tetris
                     //TODO: Add piece drawing
                 }
             }
+            //Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color
             spriteBatch.End();
 
             base.Draw(gameTime);
