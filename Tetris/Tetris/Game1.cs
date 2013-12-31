@@ -24,7 +24,7 @@ namespace Tetris
         int blockSize;
 
         // Tetris area variables
-        Boolean[] locArray;
+        int[] locArray;
         int xTiles = 10;
         int yTiles = 22;
 
@@ -61,7 +61,7 @@ namespace Tetris
             form.Location = new System.Drawing.Point(0, 0);
             
 
-            locArray= new Boolean[xTiles * yTiles];
+            locArray= new int[xTiles * yTiles];
             blockSize = 20;
 
             // Tetris area variables
@@ -125,7 +125,7 @@ namespace Tetris
             spriteBatch.Draw(playArea, playAreaLocation, Color.White);
             for (int i = 0; i < xTiles * yTiles; i++)
             {
-                if (locArray[i])
+                if (locArray[i] == 1)
                 {
                     //TODO: Add piece drawing
                 }
