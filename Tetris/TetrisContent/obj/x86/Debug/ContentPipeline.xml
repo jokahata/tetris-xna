@@ -10,6 +10,15 @@
       <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb</Output>
       <Time>2013-12-31T06:08:57.1837563-08:00</Time>
     </Item>
+    <Item>
+      <Source>playArea.png</Source>
+      <Name>playArea</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb</Output>
+      <Time>2013-12-31T06:54:29.3050247-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

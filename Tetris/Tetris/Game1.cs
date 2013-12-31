@@ -19,16 +19,18 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        
+
         int blockSize;
 
         // Tetris area variables
         Boolean[] locArray;
-        int xTiles;
-        int yTiles;
+        int xTiles = 10;
+        int yTiles = 22;
 
         // Play area variables
-        int playAreaX;
-        int playAreaY;
+        Texture2D playArea;
+        Vector2 playAreaLocation = new Vector2(25, 25);
         int playAreaWidth;
         int playAreaHeight;
 
@@ -36,6 +38,11 @@ namespace Tetris
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+
+            // Change the resolution
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 650;
         }
 
         /// <summary>
@@ -50,20 +57,18 @@ namespace Tetris
 
             base.Initialize();
 
-            // Change to 800 by 600
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
+            form.Location = new System.Drawing.Point(0, 0);
+            
 
             locArray= new Boolean[xTiles * yTiles];
-            blockSize = 5;
+            blockSize = 20;
 
             // Tetris area variables
             xTiles = 10;
-            yTiles = 20;
+            yTiles = 22;
 
             // Play area variables
-            playAreaX = 10;
-            playAreaY = 10;
             playAreaWidth = xTiles * blockSize;
             playAreaHeight = xTiles * blockSize;
         }
@@ -77,7 +82,9 @@ namespace Tetris
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+
+            playArea = Content.Load<Texture2D>("playArea");
+
         }
 
         /// <summary>
@@ -113,7 +120,17 @@ namespace Tetris
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            // Drawing
+            spriteBatch.Begin();
+            spriteBatch.Draw(playArea, playAreaLocation, Color.White);
+            for (int i = 0; i < xTiles * yTiles; i++)
+            {
+                if (locArray[i])
+                {
+                    //TODO: Add piece drawing
+                }
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
