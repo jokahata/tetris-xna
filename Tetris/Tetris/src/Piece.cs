@@ -13,9 +13,25 @@ namespace Tetris.src
     class Piece
     {
 
-        Texture2D sprite;
-        int[,] pieceConfig;
+        private Texture2D sprite
+        {
+            public set { this.sprite = value; }
+            public get { return this.sprite; }
+        }
+
+        private int[,] pieceConfig;
+
+        public int[,] PieceConfig
+        {
+            get { return this.pieceConfig; }
+        }
+
         int rotation;
+
+        public int Rotation
+        {
+            get { return this.rotation; }
+        }
         int pieceNumber;
 
         public Piece(Texture2D sprite, int[,] pieceConfig, int pieceNumber)
@@ -27,5 +43,15 @@ namespace Tetris.src
 
         }
 
+        public void rotateClockwise()
+        {
+            rotation = (rotation + 1) % 4;
+        }
+
+        public void rotateCounterClockwise()
+        {
+            if (rotation == 0) { rotation = 0; }
+            else rotation -= 1;
+        }
     }
 }

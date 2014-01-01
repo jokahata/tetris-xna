@@ -152,6 +152,8 @@ namespace Tetris
 
         //locArray will hold what blocks are on the board
         int[] locArray;
+        //gameArray will hold the current board in motion
+        int[] gameArray;
         static int xTiles = 10;
         static int yTiles = 22;
 
@@ -185,10 +187,10 @@ namespace Tetris
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             base.Initialize();
 
+            // Make the window pop up at the top left corner
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
             form.Location = new System.Drawing.Point(0, 0);
             
@@ -200,6 +202,7 @@ namespace Tetris
                 locArray[i] = -1;
             }
 
+            //REMOVE
             locArray[5] = 0;
             locArray[0] = 0;
 
@@ -253,7 +256,7 @@ namespace Tetris
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            //Don't need to use since this is a  small game
         }
 
         /// <summary>
@@ -267,8 +270,17 @@ namespace Tetris
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            //TEMP: Add random bag
-            Piece currentPiece = new Piece(sprite0, pieces[0], 0);
+            //TODO: Add random bag
+            // The player controlled piece
+            Piece curPiece = new Piece(sprite0, pieces[0], 0);
+            //TODO: Change source index to spawner
+            int sourceIndex = 0;
+
+            // GetLength(1) gets the length of the second array
+            for (int i = 0; i < curPiece.PieceConfig.GetLength(1); i++)
+            {
+
+            }
 
             processKeyboard();
 
@@ -299,6 +311,7 @@ namespace Tetris
                 if (locArray[i] != -1)
                 {
                     //TODO: Add piece drawing
+                    //TODO: Offset the drawing because of the invisible tiles above
                     Texture2D correctTexture = null;
                     Vector2 loc = new Vector2(marginX + (i % yTiles) * blockSize , marginY + (i / yTiles) * blockSize );
                     switch(locArray[i])
