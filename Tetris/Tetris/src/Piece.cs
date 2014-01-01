@@ -13,10 +13,12 @@ namespace Tetris.src
     class Piece
     {
 
-        private Texture2D sprite
+        private Texture2D sprite;
+
+        public Texture2D Sprite
         {
-            public set { this.sprite = value; }
-            public get { return this.sprite; }
+            set { this.sprite = value; }
+            get { return this.sprite; }
         }
 
         private int[,] pieceConfig;
@@ -26,13 +28,18 @@ namespace Tetris.src
             get { return this.pieceConfig; }
         }
 
-        int rotation;
+        private int rotation;
 
         public int Rotation
         {
             get { return this.rotation; }
         }
-        int pieceNumber;
+
+        private int pieceNumber;
+        public int PieceNumber
+        {
+            get { return this.pieceNumber; }
+        }
 
         public Piece(Texture2D sprite, int[,] pieceConfig, int pieceNumber)
         {

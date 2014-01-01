@@ -195,13 +195,17 @@ namespace Tetris
             form.Location = new System.Drawing.Point(0, 0);
             
 
-            locArray= new int[xTiles * yTiles];
+            locArray = new int[xTiles * yTiles];
+            gameArray = new int[xTiles * yTiles];
             // Represent empty location as -1
             for (int i = 0; i < locArray.Length; i++)
             {
                 locArray[i] = -1;
+
             }
 
+            //Copy locArray to gameArray
+            Array.Copy(locArray, gameArray, xTiles * yTiles);
             //REMOVE
             locArray[5] = 0;
             locArray[0] = 0;
@@ -244,7 +248,7 @@ namespace Tetris
             {
                 Console.WriteLine("PlayAreaWidth is not as expected");
             }
-            if (playAreaHeight != yTiles * blockSize)
+            if (playAreaHeight != (yTiles - 2) * blockSize)
             {
                 Console.WriteLine("PlayAreaHeight is not as expected");
             }
@@ -274,13 +278,25 @@ namespace Tetris
             // The player controlled piece
             Piece curPiece = new Piece(sprite0, pieces[0], 0);
             //TODO: Change source index to spawner
-            int sourceIndex = 0;
+            int sourceIndex = 10;
 
+            /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
             // GetLength(1) gets the length of the second array
-            for (int i = 0; i < curPiece.PieceConfig.GetLength(1); i++)
-            {
+            int arrLength = curPiece.PieceConfig.GetLength(1);
 
+            // To properly place the array on the larger array
+            int rowSize = 3;
+            if (arrLength % 4 == 0) { rowSize = 4; }
+            for (int i = 0; i < arrLength; i++)
+            {
+                Console.WriteLine(curPiece.PieceConfig[curPiece.Rotation, i]);
+                if (curPiece.PieceConfig[curPiece.Rotation, i] == 1)
+                {
+                    //Offsets it 
+                    gameArray[sourceIndex + (i % rowSize) + ((i / rowSize) * xTiles)] = curPiece.PieceNumber;
+                }
             }
+            /* */
 
             processKeyboard();
 
@@ -308,19 +324,19 @@ namespace Tetris
             // Draw out pieces on board
             for (int i = 0; i < xTiles * yTiles; i++)
             {
-                if (locArray[i] != -1)
+                if (gameArray[i] != -1)
                 {
                     //TODO: Add piece drawing
                     //TODO: Offset the drawing because of the invisible tiles above
                     Texture2D correctTexture = null;
-                    Vector2 loc = new Vector2(marginX + (i % yTiles) * blockSize , marginY + (i / yTiles) * blockSize );
-                    switch(locArray[i])
+                    Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize , marginY + (i / xTiles) * blockSize );
+                    switch(gameArray[i])
                     {
                         case 0:
                             correctTexture = sprite0;
                             break;
                         default:
-                            Console.WriteLine("An incorrect integer was put into the locArray");
+                            Console.WriteLine("An incorrect integer was put into the gameArray");
                             break;
                     }
                     spriteBatch.Draw(correctTexture, loc, Color.White);
