@@ -1,2 +1,4 @@
 Content\block0.xnb
 Content\playArea.xnb
+Content\nullBlock.xnb
+Content\bg.xnb

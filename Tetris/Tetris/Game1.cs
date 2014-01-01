@@ -165,8 +165,10 @@ namespace Tetris
         static int playAreaWidth;
         static int playAreaHeight;
 
+        int sourceIndex = 0;
+
         //Sprites
-        Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6;
+        Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6, nullBlock, background;
 
         public Game1()
         {
@@ -206,9 +208,7 @@ namespace Tetris
 
             //Copy locArray to gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
-            //REMOVE
-            locArray[5] = 0;
-            locArray[0] = 0;
+
 
             // Tetris area variables
             xTiles = 10;
@@ -229,6 +229,8 @@ namespace Tetris
 
             playArea = Content.Load<Texture2D>("playArea");
             sprite0 = Content.Load<Texture2D>("block0");
+            nullBlock = Content.Load<Texture2D>("nullBlock");
+            background = Content.Load<Texture2D>("bg");
             getBounds();
         }
 
@@ -274,11 +276,13 @@ namespace Tetris
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            // Reset gameArray
+            Array.Copy(locArray, gameArray, xTiles * yTiles);
+
             //TODO: Add random bag
             // The player controlled piece
-            Piece curPiece = new Piece(sprite0, pieces[0], 0);
+            Piece curPiece = new Piece(sprite0, pieces[2], 0);
             //TODO: Change source index to spawner
-            int sourceIndex = 10;
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
             // GetLength(1) gets the length of the second array
@@ -289,7 +293,7 @@ namespace Tetris
             if (arrLength % 4 == 0) { rowSize = 4; }
             for (int i = 0; i < arrLength; i++)
             {
-                Console.WriteLine(curPiece.PieceConfig[curPiece.Rotation, i]);
+                
                 if (curPiece.PieceConfig[curPiece.Rotation, i] == 1)
                 {
                     //Offsets it 
@@ -306,6 +310,13 @@ namespace Tetris
         private void processKeyboard()
         {
             KeyboardState k = Keyboard.GetState();
+            if (k.IsKeyDown(Keys.Right) || k.IsKeyDown(Keys.D))
+            {
+                Console.WriteLine("KeyPressed: Right");
+                //TODO: Check for boundaries. Maybe another array with rightmost
+                if(sourceIndex < 10)
+                    sourceIndex++;
+            }
 
         }
 
@@ -319,30 +330,30 @@ namespace Tetris
 
             // Drawing
             spriteBatch.Begin();
+            spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
             spriteBatch.Draw(playArea, playAreaLocation, Color.White);
 
             // Draw out pieces on board
             for (int i = 0; i < xTiles * yTiles; i++)
             {
-                if (gameArray[i] != -1)
+                //TODO: Add piece drawing
+                //TODO: Offset the drawing because of the invisible tiles above
+                Texture2D correctTexture = nullBlock;
+                Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize , marginY + (i / xTiles) * blockSize );
+                switch(gameArray[i])
                 {
-                    //TODO: Add piece drawing
-                    //TODO: Offset the drawing because of the invisible tiles above
-                    Texture2D correctTexture = null;
-                    Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize , marginY + (i / xTiles) * blockSize );
-                    switch(gameArray[i])
-                    {
-                        case 0:
-                            correctTexture = sprite0;
-                            break;
-                        default:
-                            Console.WriteLine("An incorrect integer was put into the gameArray");
-                            break;
-                    }
-                    spriteBatch.Draw(correctTexture, loc, Color.White);
+                    case -1:
+                        break;
+                    case 0:
+                        correctTexture = sprite0;
+                        break;
+                    default:
+                        Console.WriteLine("An incorrect integer was put into the gameArray");
+                        break;
                 }
+                spriteBatch.Draw(correctTexture, loc, Color.White);
             }
-            //Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color
+            //TODO: Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color
             spriteBatch.End();
 
             base.Draw(gameTime);
