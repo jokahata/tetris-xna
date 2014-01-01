@@ -147,18 +147,20 @@ namespace Tetris
 
         };
 
-        int blockSize;
+        static int blockSize;
 
-        // Tetris area variables
+        //locArray will hold what blocks are on the board
         int[] locArray;
         int xTiles = 10;
         int yTiles = 22;
 
         // Play area variables
         Texture2D playArea;
-        Vector2 playAreaLocation = new Vector2(25, 25);
-        int playAreaWidth;
-        int playAreaHeight;
+        static int playAreaOffsetX = 25;
+        static int playAreaOffsetY = 25;
+        static Vector2 playAreaLocation = new Vector2(playAreaOffsetX, playAreaOffsetY);
+        static int playAreaWidth;
+        static int playAreaHeight;
 
         //Sprites
         Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6;
@@ -191,15 +193,20 @@ namespace Tetris
             
 
             locArray= new int[xTiles * yTiles];
-            blockSize = 20;
+            // Represent empty location as -1
+            for (int i = 0; i < locArray.Length; i++)
+            {
+                locArray[i] = -1;
+            }
+
+            locArray[5] = 0;
+            locArray[0] = 0;
 
             // Tetris area variables
             xTiles = 10;
             yTiles = 22;
 
-            // Play area variables
-            playAreaWidth = xTiles * blockSize;
-            playAreaHeight = xTiles * blockSize;
+            
         }
 
         /// <summary>
@@ -214,8 +221,31 @@ namespace Tetris
 
             playArea = Content.Load<Texture2D>("playArea");
             sprite0 = Content.Load<Texture2D>("block0");
+            getBounds();
         }
 
+        /// <summary>
+        /// Get the correct heights from the textures
+        /// </summary>
+        protected void getBounds()
+        {
+            blockSize = sprite0.Height;
+
+            playAreaWidth = playArea.Width;
+            playAreaHeight = playArea.Height;
+
+
+            // Checks that the dimensions are correct
+            if (playAreaWidth != xTiles * blockSize)
+            {
+                Console.WriteLine("PlayAreaWidth is not as expected");
+            }
+            if (playAreaHeight != yTiles * blockSize)
+            {
+                Console.WriteLine("PlayAreaHeight is not as expected");
+            }
+
+        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -252,11 +282,25 @@ namespace Tetris
             // Drawing
             spriteBatch.Begin();
             spriteBatch.Draw(playArea, playAreaLocation, Color.White);
+
+            // Draw out pieces on board
             for (int i = 0; i < xTiles * yTiles; i++)
             {
-                if (locArray[i] == 1)
+                if (locArray[i] != -1)
                 {
                     //TODO: Add piece drawing
+                    Texture2D correctTexture = null;
+                    Vector2 loc = new Vector2(playAreaOffsetX + (i % yTiles) * blockSize , playAreaOffsetY + (i / yTiles) * blockSize );
+                    switch(locArray[i])
+                    {
+                        case 0:
+                            correctTexture = sprite0;
+                            break;
+                        default:
+                            Console.WriteLine("An incorrect integer was put into the locArray");
+                            break;
+                    }
+                    spriteBatch.Draw(correctTexture, loc, Color.White);
                 }
             }
             //Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color

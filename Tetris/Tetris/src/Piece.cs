@@ -16,12 +16,15 @@ namespace Tetris.src
         Texture2D sprite;
         int[][] plan;
         int rotation;
+        int selection;
 
-        public Piece(Texture2D sprite, int[][] plan)
+        public Piece(Texture2D sprite, int[][] plan, int selection)
         {
             this.sprite = sprite;
             this.plan = plan;
+            this.selection = selection;
             rotation = 0;
+
         }
 
     }
