@@ -14,11 +14,11 @@ namespace Tetris.src
     {
 
         Texture2D sprite;
-        int[] pieceConfig;
+        int[,] pieceConfig;
         int rotation;
         int pieceNumber;
 
-        public Piece(Texture2D sprite, int[] pieceConfig, int pieceNumber)
+        public Piece(Texture2D sprite, int[,] pieceConfig, int pieceNumber)
         {
             this.sprite = sprite;
             this.pieceConfig = pieceConfig;
