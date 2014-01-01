@@ -148,6 +148,22 @@ namespace Tetris
 
         };
 
+        private int[,] leftEdge = {/*Square*/{1, 1, 1, 1},
+                                   /*Strai*/ {0, 2, 0, 1},
+                                   /*Ri L*/  {0, 1, 0, 1},
+                                   /*Le L*/  {0, 1, 0, 0},
+                                   /*Ri Z*/  {0, 1, 0, 0},
+                                   /*T*/     {0, 1, 0, 0},
+                                   /*Le Z*/  {0, 1, 0, 0}};
+
+        private int[,] rightEdge = {/*Square*/{2, 2, 2, 2},
+                                    /*Strai*/ {3, 2, 3, 1},
+                                    /*Ri L*/  {2, 2, 2, 1},
+                                    /*Le L*/  {2, 2, 2, 1},
+                                    /*Ri Z*/  {2, 2, 2, 1},
+                                    /*T*/     {2, 2, 2, 1},
+                                    /*Le Z*/  {2, 2, 2, 1}};
+
         static int blockSize;
 
         //locArray will hold what blocks are on the board
@@ -165,6 +181,7 @@ namespace Tetris
         static int playAreaWidth;
         static int playAreaHeight;
 
+        float currentTime = 0f;
         int sourceIndex = 0;
 
         //Sprites
@@ -275,6 +292,8 @@ namespace Tetris
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
 
             // Reset gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
