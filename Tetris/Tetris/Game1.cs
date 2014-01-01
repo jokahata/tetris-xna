@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Tetris.src;
 
 namespace Tetris
 {
@@ -151,14 +152,14 @@ namespace Tetris
 
         //locArray will hold what blocks are on the board
         int[] locArray;
-        int xTiles = 10;
-        int yTiles = 22;
+        static int xTiles = 10;
+        static int yTiles = 22;
 
         // Play area variables
         Texture2D playArea;
-        static int playAreaOffsetX = 25;
-        static int playAreaOffsetY = 25;
-        static Vector2 playAreaLocation = new Vector2(playAreaOffsetX, playAreaOffsetY);
+        static int marginX = 25;
+        static int marginY = 25;
+        static Vector2 playAreaLocation = new Vector2(marginX, marginY);
         static int playAreaWidth;
         static int playAreaHeight;
 
@@ -266,9 +267,18 @@ namespace Tetris
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            //TEMP: Add random bag
+            Piece currentPiece = new Piece(sprite0, pieces[0,0], 0);
+
+            processKeyboard();
 
             base.Update(gameTime);
+        }
+
+        private void processKeyboard()
+        {
+            KeyboardState k = Keyboard.GetState();
+
         }
 
         /// <summary>
@@ -290,7 +300,7 @@ namespace Tetris
                 {
                     //TODO: Add piece drawing
                     Texture2D correctTexture = null;
-                    Vector2 loc = new Vector2(playAreaOffsetX + (i % yTiles) * blockSize , playAreaOffsetY + (i / yTiles) * blockSize );
+                    Vector2 loc = new Vector2(marginX + (i % yTiles) * blockSize , marginY + (i / yTiles) * blockSize );
                     switch(locArray[i])
                     {
                         case 0:

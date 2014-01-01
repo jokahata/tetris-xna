@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb</Output>
-      <Time>2013-12-31T22:46:39.1536545-08:00</Time>
+      <Time>2014-01-01T00:15:08.9490596-08:00</Time>
     </Item>
     <Item>
       <Source>playArea.png</Source>
@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb</Output>
-      <Time>2013-12-31T06:54:29.3050247-08:00</Time>
+      <Time>2014-01-01T00:14:30.9588867-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
