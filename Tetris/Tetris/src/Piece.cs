@@ -14,7 +14,6 @@ namespace Tetris.src
     {
 
         private Texture2D sprite;
-
         public Texture2D Sprite
         {
             set { this.sprite = value; }
@@ -23,13 +22,7 @@ namespace Tetris.src
 
         private int[,] pieceConfig;
 
-        public int[,] PieceConfig
-        {
-            get { return this.pieceConfig; }
-        }
-
         private int rotation;
-
         public int Rotation
         {
             get { return this.rotation; }
@@ -39,6 +32,12 @@ namespace Tetris.src
         public int PieceID
         {
             get { return this.pieceID; }
+        }
+
+        private int rowSize;
+        public int RowSize
+        {
+            get { return this.rowSize; }
         }
 
         //Use a 2 dimensional array that holds a jagged array to represent each piece
@@ -193,9 +192,12 @@ namespace Tetris.src
         public Piece(Texture2D sprite, int pieceID)
         {
             this.sprite = sprite;
-            this.pieceConfig = pieces[3];
+            //TEMP
+            this.pieceConfig = pieces[1];
             this.pieceID = pieceID;
             rotation = 0;
+            // RowSize is 4 if a square or straight line, else 3
+            rowSize = pieceID == 0 || pieceID == 1 ? 4 : 3;
 
         }
 
@@ -218,6 +220,16 @@ namespace Tetris.src
         public int getRightEdge()
         {
             return rightEdge[pieceID, rotation];
+        }
+
+        public int getValueAtPoint(int x)
+        {
+            return pieceConfig[rotation, x];
+        }
+
+        public int getLength()
+        {
+            return pieceConfig.GetLength(1);
         }
     }
 }

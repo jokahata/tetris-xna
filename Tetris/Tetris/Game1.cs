@@ -44,6 +44,7 @@ namespace Tetris
         float currentTime = 0f;
         int sourceIndex = 0;
 
+        private Piece curPiece;
         //Sprites
         Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6, nullBlock, background;
 
@@ -90,6 +91,8 @@ namespace Tetris
                 locArray[i] = -1;
 
             }
+
+            locArray[8] = 0;
 
             //Copy locArray to gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
@@ -168,23 +171,20 @@ namespace Tetris
 
             //TODO: Add random bag
             // The player controlled piece
-            Piece curPiece = new Piece(sprite0, 0);
+            curPiece = new Piece(sprite0, 0);
             //TODO: Change source index to spawner
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
-            // GetLength(1) gets the length of the second array
-            int arrLength = curPiece.PieceConfig.GetLength(1);
+            int arrLength = curPiece.getLength();
 
-            // To properly place the array on the larger array
-            int rowSize = 3;
-            if (arrLength % 4 == 0) { rowSize = 4; }
+            
             for (int i = 0; i < arrLength; i++)
             {
                 
-                if (curPiece.PieceConfig[curPiece.Rotation, i] == 1)
+                if (curPiece.getValueAtPoint(i) == 1)
                 {
                     //Offsets it 
-                    gameArray[sourceIndex + (i % rowSize) + ((i / rowSize) * xTiles)] = curPiece.PieceID;
+                    gameArray[sourceIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] = curPiece.PieceID;
                 }
             }
             /* */
@@ -202,8 +202,11 @@ namespace Tetris
                 Console.WriteLine("KeyPressed: Right");
                 //TODO: Check for boundaries. Maybe another array with rightmost
                 //TODO: Add timer for when key is pressed so that scrolling happens
-                if(sourceIndex < 10 && !keyPressedRight)
+                if (sourceIndex < 10 && !keyPressedRight && !checkCollisionRight())
+                {
+                    keyPressedRight = true;
                     sourceIndex++;
+                }
             }
 
             if (keyPressedRight && k.IsKeyUp(Keys.Right))
@@ -214,9 +217,23 @@ namespace Tetris
 
         }
 
-        private Boolean checkCollision()
+        private Boolean checkCollisionRight()
         {
-            //REMOVE
+            //Check if on right edge of playArea
+            if (sourceIndex + curPiece.getRightEdge() == xTiles - 1) { return true; }
+            for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
+            {
+                for (int x = 0; x < curPiece.RowSize; x++)
+                {
+                    // Finds right edge of that row
+                    Boolean isRightEdge = curPiece.getValueAtPoint(curPiece.getRightEdge() + y * curPiece.RowSize) == 1 && x != curPiece.RowSize && curPiece.getValueAtPoint(curPiece.getRightEdge() + y * curPiece.RowSize + 1) == 0;
+                    if (isRightEdge && gameArray[sourceIndex + curPiece.getRightEdge() + 1 + y * xTiles] != -1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            //TEMP
             return false;
 
         }
