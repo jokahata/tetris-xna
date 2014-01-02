@@ -20,149 +20,9 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //Use a 2 dimensional array that holds a jagged array to represent each piece
-        int[][,] pieces = 
-        {
-                /*0: Square Block*/
-                          new int[,]{ {0, 1, 1, 0,
-                                       0, 1, 1, 0,
-                                       0, 0, 0, 0},
+        
 
-                                      {0, 1, 1, 0,
-                                       0, 1, 1, 0,
-                                       0, 0, 0, 0},
-
-                                      {0, 1, 1, 0,
-                                       0, 1, 1, 0,
-                                       0, 0, 0, 0},
-
-                                      {0, 1, 1, 0,
-                                       0, 1, 1, 0,
-                                       0, 0, 0, 0}},
-
-                /*1: Straight block*/
-                          new int[,]{ {0, 0, 0, 0,
-                                       1, 1, 1, 1,
-                                       0, 0, 0, 0,
-                                       0, 0, 0, 0},
-
-                                      {0, 0, 1, 0,
-                                       0, 0, 1, 0,
-                                       0, 0, 1, 0,
-                                       0, 0, 1, 0},
-
-                                      {0, 0, 0, 0,
-                                       0, 0, 0, 0,
-                                       1, 1, 1, 1,
-                                       0, 0, 0, 0,},
-
-                                      {0, 1, 0, 0,
-                                       0, 1, 0, 0,
-                                       0, 1, 0, 0,
-                                       0, 1, 0, 0}},
-
-                /*2: Right L Block*/
-                          new int[,]{ {1, 0, 0,
-                                       1, 1, 1,
-                                       0, 0, 0},
-
-                                      {0, 1, 1,
-                                       0, 1, 0,
-                                       0, 1, 0},
-
-                                      {0, 0, 0,
-                                       1, 1, 1,
-                                       0, 0, 1},
-
-                                      {0, 1, 0,
-                                       0, 1, 0,
-                                       1, 1, 0}},
-
-            /*3: Left L Block*/
-                          new int[,]{ {0, 0, 1,
-                                       1, 1, 1,
-                                       0, 0, 0},
-
-                                      {0, 1, 0,
-                                       0, 1, 0,
-                                       0, 1, 1},
-
-                                      {0, 0, 0,
-                                       1, 1, 1,
-                                       1, 0, 0},
-
-                                      {1, 1, 0,
-                                       0, 1, 0,
-                                       0, 1, 0}},
-
-                /*4: Right Z Block*/
-                        new int[,]{   {0, 1, 1,
-                                       1, 1, 0,
-                                       0, 0, 0},
-
-                                      {0, 1, 0,
-                                       0, 1, 1,
-                                       0, 0, 1},
-
-                                      {0, 0, 0,
-                                       0, 1, 1,
-                                       1, 1, 0},
-
-                                      {1, 0, 0,
-                                       1, 1, 0,
-                                       0, 1, 0}},
-
-                /*5: T Block*/
-                        new int[,]{   {0, 1, 0,
-                                       1, 1, 1,
-                                       0, 0, 0},
-
-                                      {0, 1, 0,
-                                       0, 1, 1,
-                                       0, 1, 0},
-
-                                      {0, 0, 0,
-                                       1, 1, 1,
-                                       0, 1, 0},
-
-                                      {0, 1, 0,
-                                       1, 1, 0,
-                                       0, 1, 0}},
-
-                /*6: Left Z Block*/
-                        new int[,]{   {1, 1, 0,
-                                       0, 1, 1,
-                                       0, 0, 0},
-
-                                      {0, 0, 1, 
-                                       0, 1, 1,
-                                       0, 1, 0},
-
-                                      {0, 0, 0, 
-                                       1, 1, 0,
-                                       0, 1, 1},
-
-                                      {0, 1, 0,
-                                       1, 1, 0,
-                                       1, 0, 0}}
-
-        };
-
-        private int[,] leftEdge = {/*Square*/{1, 1, 1, 1},
-                                   /*Strai*/ {0, 2, 0, 1},
-                                   /*Ri L*/  {0, 1, 0, 1},
-                                   /*Le L*/  {0, 1, 0, 0},
-                                   /*Ri Z*/  {0, 1, 0, 0},
-                                   /*T*/     {0, 1, 0, 0},
-                                   /*Le Z*/  {0, 1, 0, 0}};
-
-        private int[,] rightEdge = {/*Square*/{2, 2, 2, 2},
-                                    /*Strai*/ {3, 2, 3, 1},
-                                    /*Ri L*/  {2, 2, 2, 1},
-                                    /*Le L*/  {2, 2, 2, 1},
-                                    /*Ri Z*/  {2, 2, 2, 1},
-                                    /*T*/     {2, 2, 2, 1},
-                                    /*Le Z*/  {2, 2, 2, 1}};
+        
 
         static int blockSize;
 
@@ -186,6 +46,14 @@ namespace Tetris
 
         //Sprites
         Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6, nullBlock, background;
+
+        //Booleans for keypresses
+        Boolean keyPressed = false;
+        Boolean keyPressedRight = false;
+        Boolean keyPressedLeft = false;
+        Boolean keyPressedUp = false;
+        Boolean keyPressedDown = false;
+        //TODO:
 
         public Game1()
         {
@@ -300,7 +168,7 @@ namespace Tetris
 
             //TODO: Add random bag
             // The player controlled piece
-            Piece curPiece = new Piece(sprite0, pieces[2], 0);
+            Piece curPiece = new Piece(sprite0, 0);
             //TODO: Change source index to spawner
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
@@ -316,7 +184,7 @@ namespace Tetris
                 if (curPiece.PieceConfig[curPiece.Rotation, i] == 1)
                 {
                     //Offsets it 
-                    gameArray[sourceIndex + (i % rowSize) + ((i / rowSize) * xTiles)] = curPiece.PieceNumber;
+                    gameArray[sourceIndex + (i % rowSize) + ((i / rowSize) * xTiles)] = curPiece.PieceID;
                 }
             }
             /* */
@@ -329,13 +197,27 @@ namespace Tetris
         private void processKeyboard()
         {
             KeyboardState k = Keyboard.GetState();
-            if (k.IsKeyDown(Keys.Right) || k.IsKeyDown(Keys.D))
+            if (k.IsKeyDown(Keys.Right))
             {
                 Console.WriteLine("KeyPressed: Right");
                 //TODO: Check for boundaries. Maybe another array with rightmost
-                if(sourceIndex < 10)
+                //TODO: Add timer for when key is pressed so that scrolling happens
+                if(sourceIndex < 10 && !keyPressedRight)
                     sourceIndex++;
             }
+
+            if (keyPressedRight && k.IsKeyUp(Keys.Right))
+            {
+                keyPressedRight = false;
+            }
+
+
+        }
+
+        private Boolean checkCollision()
+        {
+            //REMOVE
+            return false;
 
         }
 
@@ -367,7 +249,7 @@ namespace Tetris
                         correctTexture = sprite0;
                         break;
                     default:
-                        Console.WriteLine("An incorrect integer was put into the gameArray");
+                        Console.WriteLine("An incorrect integer was put into the gameArray: " + gameArray[i]);
                         break;
                 }
                 spriteBatch.Draw(correctTexture, loc, Color.White);
