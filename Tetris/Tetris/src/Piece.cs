@@ -193,7 +193,7 @@ namespace Tetris.src
         {
             this.sprite = sprite;
             //TEMP
-            this.pieceConfig = pieces[1];
+            this.pieceConfig = pieces[pieceID];
             this.pieceID = pieceID;
             rotation = 0;
             // RowSize is 4 if a square or straight line, else 3

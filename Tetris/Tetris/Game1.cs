@@ -46,7 +46,7 @@ namespace Tetris
 
         private Piece curPiece;
         //Sprites
-        Texture2D sprite0, sprite1, sprite2, sprite3, sprite4, sprite5, sprite6, nullBlock, background;
+        Texture2D block0, block1, block2, block3, block4, block5, block6, nullBlock, background;
 
         //Booleans for keypresses
         Boolean keyPressed = false;
@@ -116,7 +116,14 @@ namespace Tetris
 
 
             playArea = Content.Load<Texture2D>("playArea");
-            sprite0 = Content.Load<Texture2D>("block0");
+            block0 = Content.Load<Texture2D>("block0");
+            //TODO
+            block1 = Content.Load<Texture2D>("block0");
+            block2 = Content.Load<Texture2D>("block0");
+            block3 = Content.Load<Texture2D>("block0");
+            block4 = Content.Load<Texture2D>("block0");
+            block5 = Content.Load<Texture2D>("block0");
+            block6 = Content.Load<Texture2D>("block0");
             nullBlock = Content.Load<Texture2D>("nullBlock");
             background = Content.Load<Texture2D>("bg");
             getBounds();
@@ -127,7 +134,7 @@ namespace Tetris
         /// </summary>
         protected void getBounds()
         {
-            blockSize = sprite0.Height;
+            blockSize = block0.Height;
 
             playAreaWidth = playArea.Width;
             playAreaHeight = playArea.Height;
@@ -171,7 +178,7 @@ namespace Tetris
 
             //TODO: Add random bag
             // The player controlled piece
-            curPiece = new Piece(sprite0, 0);
+            curPiece = new Piece(block0, 6);
             //TODO: Change source index to spawner
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
@@ -226,8 +233,8 @@ namespace Tetris
                 for (int x = 0; x < curPiece.RowSize; x++)
                 {
                     // Finds right edge of that row
-                    Boolean isRightEdge = curPiece.getValueAtPoint(curPiece.getRightEdge() + y * curPiece.RowSize) == 1 && x != curPiece.RowSize && curPiece.getValueAtPoint(curPiece.getRightEdge() + y * curPiece.RowSize + 1) == 0;
-                    if (isRightEdge && gameArray[sourceIndex + curPiece.getRightEdge() + 1 + y * xTiles] != -1)
+                    Boolean isRightEdge = curPiece.getValueAtPoint(x + y * curPiece.RowSize) == 1 && (x == curPiece.RowSize - 1 || curPiece.getValueAtPoint(x + 1 + y * curPiece.RowSize) == 0);
+                    if (isRightEdge && gameArray[sourceIndex + x + 1 + y * xTiles] != -1)
                     {
                         return true;
                     }
@@ -263,7 +270,26 @@ namespace Tetris
                     case -1:
                         break;
                     case 0:
-                        correctTexture = sprite0;
+                        correctTexture = block0;
+                        break;
+                    //TODO: Put other blocks
+                    case 1:
+                        correctTexture = block0;
+                        break;
+                    case 2:
+                        correctTexture = block0;
+                        break;
+                    case 3:
+                        correctTexture = block0;
+                        break;
+                    case 4:
+                        correctTexture = block0;
+                        break;
+                    case 5:
+                        correctTexture = block0;
+                        break;
+                    case 6:
+                        correctTexture = block0;
                         break;
                     default:
                         Console.WriteLine("An incorrect integer was put into the gameArray: " + gameArray[i]);
