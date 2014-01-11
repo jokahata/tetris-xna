@@ -172,10 +172,21 @@ namespace Tetris
                 this.Exit();
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
+            //DropDown
             if (currentTime >= 1)
             {
-                sourceIndex += xTiles;
-                currentTime--;
+                if (checkCollisionDown())
+                {
+                    needNewPiece = true;
+                    //TODO: Pick correct sourceIndex
+                    sourceIndex = 0;
+                    //TODO: Call line completion checker
+                }
+                else
+                {
+                    sourceIndex += xTiles;
+                    currentTime--;
+                }
             }
             // Reset gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
@@ -307,6 +318,24 @@ namespace Tetris
             return false;
         }
 
+        private Boolean checkCollisionDown()
+        {
+            int tempIndex = sourceIndex + xTiles;
+            int arrLength = curPiece.getLength();
+            for (int i = 0; i < arrLength; i++)
+            {
+
+                if (curPiece.getValueAtPoint(i) == 1)
+                {
+                    //Check outside bounds of array
+                    if (tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles) > xTiles * yTiles) { return true; }
+                    //Check if piece is already there
+                    if (gameArray[tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] == 1) { return true; }
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -359,7 +388,7 @@ namespace Tetris
                         break;
                 }
                 // Draw only the tiles within the area
-                if (i > 2 * xTiles)
+                if (i > 2 * xTiles - 1)
                 {
                     spriteBatch.Draw(correctTexture, loc, Color.White);
                 }
