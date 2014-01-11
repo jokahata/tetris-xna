@@ -92,8 +92,6 @@ namespace Tetris
 
             }
 
-            locArray[8] = 0;
-
             //Copy locArray to gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
 
@@ -187,8 +185,6 @@ namespace Tetris
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
             int arrLength = curPiece.getLength();
-
-
             for (int i = 0; i < arrLength; i++)
             {
 
@@ -213,7 +209,7 @@ namespace Tetris
                 Console.WriteLine("KeyPressed: Right");
                 //TODO: Check for boundaries. Maybe another array with rightmost
                 //TODO: Add timer for when key is pressed so that scrolling happens
-                if (sourceIndex > 10 && !keyPressedRight && !checkCollisionRight())
+                if (!keyPressedRight && !checkCollisionRight())
                 {
                     keyPressedRight = true;
                     sourceIndex++;
@@ -227,7 +223,11 @@ namespace Tetris
 
             if (k.IsKeyDown(Keys.Left))
             {
-                keyPressedLeft = true;
+                if (!keyPressedLeft && !checkCollisionLeft())
+                {
+                    keyPressedLeft = true;
+                    sourceIndex--;
+                }
             }
 
             if (keyPressedLeft && k.IsKeyUp(Keys.Left))
@@ -243,7 +243,7 @@ namespace Tetris
         private Boolean checkCollisionRight()
         {
             //Check if on right edge of playArea
-            if (sourceIndex + curPiece.getRightEdge() == xTiles - 1) { return true; }
+            if ((sourceIndex % xTiles) + curPiece.getRightEdge() == xTiles - 1) { return true; }
             //Check if an individual block is next to a block on the right
             for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
             {
@@ -263,7 +263,7 @@ namespace Tetris
         private Boolean checkCollisionLeft()
         {
             //Check if on left edge of playArea
-            if (sourceIndex + curPiece.getLeftEdge() == xTiles - 1) { return true; }
+            if ((sourceIndex % xTiles) + curPiece.getLeftEdge() == 0) { return true; }
             //Check if an individual block is next to a block on the left
             for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
             {
