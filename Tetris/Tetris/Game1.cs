@@ -172,7 +172,11 @@ namespace Tetris
                 this.Exit();
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
-
+            if (currentTime >= 1)
+            {
+                sourceIndex += xTiles;
+                currentTime--;
+            }
             // Reset gameArray
             Array.Copy(locArray, gameArray, xTiles * yTiles);
 
@@ -209,7 +213,7 @@ namespace Tetris
                 Console.WriteLine("KeyPressed: Right");
                 //TODO: Check for boundaries. Maybe another array with rightmost
                 //TODO: Add timer for when key is pressed so that scrolling happens
-                if (sourceIndex < 10 && !keyPressedRight && !checkCollisionRight())
+                if (sourceIndex > 10 && !keyPressedRight && !checkCollisionRight())
                 {
                     keyPressedRight = true;
                     sourceIndex++;
@@ -220,6 +224,18 @@ namespace Tetris
             {
                 keyPressedRight = false;
             }
+
+            if (k.IsKeyDown(Keys.Left))
+            {
+                keyPressedLeft = true;
+            }
+
+            if (keyPressedLeft && k.IsKeyUp(Keys.Left))
+            {
+                keyPressedLeft = false;
+            }
+
+            
 
 
         }
@@ -242,7 +258,26 @@ namespace Tetris
                 }
             }
             return false;
+        }
 
+        private Boolean checkCollisionLeft()
+        {
+            //Check if on left edge of playArea
+            if (sourceIndex + curPiece.getLeftEdge() == xTiles - 1) { return true; }
+            //Check if an individual block is next to a block on the left
+            for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
+            {
+                for (int x = 0; x < curPiece.RowSize; x++)
+                {
+                    // Finds left edge of that row
+                    Boolean isLeftEdge = curPiece.getValueAtPoint(x + y * curPiece.RowSize) == 1 && (x == 0 || curPiece.getValueAtPoint(x - 1 + y * curPiece.RowSize) == 0);
+                    if (isLeftEdge && gameArray[sourceIndex + x - 1 + y * xTiles] != -1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -274,22 +309,22 @@ namespace Tetris
                         break;
                     //TODO: Put other blocks
                     case 1:
-                        correctTexture = block0;
+                        correctTexture = block1;
                         break;
                     case 2:
-                        correctTexture = block0;
+                        correctTexture = block2;
                         break;
                     case 3:
-                        correctTexture = block0;
+                        correctTexture = block3;
                         break;
                     case 4:
-                        correctTexture = block0;
+                        correctTexture = block4;
                         break;
                     case 5:
-                        correctTexture = block0;
+                        correctTexture = block5;
                         break;
                     case 6:
-                        correctTexture = block0;
+                        correctTexture = block6;
                         break;
                     default:
                         Console.WriteLine("An incorrect integer was put into the gameArray: " + gameArray[i]);
