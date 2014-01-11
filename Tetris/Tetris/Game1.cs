@@ -54,6 +54,8 @@ namespace Tetris
         Boolean keyPressedLeft = false;
         Boolean keyPressedUp = false;
         Boolean keyPressedDown = false;
+
+        Boolean needNewPiece = true;
         //TODO:
 
         public Game1()
@@ -180,7 +182,11 @@ namespace Tetris
 
             //TODO: Add random bag
             // The player controlled piece
-            curPiece = new Piece(block0, 6);
+            if (needNewPiece)
+            {
+                curPiece = new Piece(block0, 6);
+                needNewPiece = false;
+            }
             //TODO: Change source index to spawner
 
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
@@ -204,6 +210,7 @@ namespace Tetris
         private void processKeyboard()
         {
             KeyboardState k = Keyboard.GetState();
+            //Move right
             if (k.IsKeyDown(Keys.Right))
             {
                 Console.WriteLine("KeyPressed: Right");
@@ -216,11 +223,13 @@ namespace Tetris
                 }
             }
 
+            //Release right
             if (keyPressedRight && k.IsKeyUp(Keys.Right))
             {
                 keyPressedRight = false;
             }
 
+            //Move left
             if (k.IsKeyDown(Keys.Left))
             {
                 if (!keyPressedLeft && !checkCollisionLeft())
@@ -230,12 +239,30 @@ namespace Tetris
                 }
             }
 
+            //Release left
             if (keyPressedLeft && k.IsKeyUp(Keys.Left))
             {
                 keyPressedLeft = false;
             }
 
+            //Rotate
+            if (k.IsKeyDown(Keys.Up))
+            {
+                //TODO: Rotation collision check
+                Console.WriteLine("KeyPressed: Up");
+                Console.WriteLine("Rotation is: " + curPiece.Rotation);
+                if (!keyPressedUp)
+                {
+                    curPiece.rotateClockwise();
+                    keyPressedUp = true;
+                }
+            }
 
+            //Release left
+            if (keyPressedUp && k.IsKeyUp(Keys.Up))
+            {
+                keyPressedUp = false;
+            }
 
 
         }
