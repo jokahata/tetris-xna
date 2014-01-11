@@ -20,9 +20,9 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        
 
-        
+
+
 
         static int blockSize;
 
@@ -81,7 +81,7 @@ namespace Tetris
             // Make the window pop up at the top left corner
             var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(this.Window.Handle);
             form.Location = new System.Drawing.Point(0, 0);
-            
+
 
             locArray = new int[xTiles * yTiles];
             gameArray = new int[xTiles * yTiles];
@@ -102,7 +102,7 @@ namespace Tetris
             xTiles = 10;
             yTiles = 22;
 
-            
+
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace Tetris
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
             int arrLength = curPiece.getLength();
 
-            
+
             for (int i = 0; i < arrLength; i++)
             {
-                
+
                 if (curPiece.getValueAtPoint(i) == 1)
                 {
                     //Offsets it 
@@ -235,7 +235,7 @@ namespace Tetris
                 keyPressedLeft = false;
             }
 
-            
+
 
 
         }
@@ -298,9 +298,10 @@ namespace Tetris
             {
                 //TODO: Add piece drawing
                 //TODO: Offset the drawing because of the invisible tiles above
+
                 Texture2D correctTexture = nullBlock;
-                Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize , marginY + (i / xTiles) * blockSize );
-                switch(gameArray[i])
+                Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize, marginY + ((i - 2 * xTiles) / xTiles) * blockSize);
+                switch (gameArray[i])
                 {
                     case -1:
                         break;
@@ -330,7 +331,11 @@ namespace Tetris
                         Console.WriteLine("An incorrect integer was put into the gameArray: " + gameArray[i]);
                         break;
                 }
-                spriteBatch.Draw(correctTexture, loc, Color.White);
+                // Draw only the tiles within the area
+                if (i > 2 * xTiles)
+                {
+                    spriteBatch.Draw(correctTexture, loc, Color.White);
+                }
             }
             //TODO: Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color
             spriteBatch.End();
