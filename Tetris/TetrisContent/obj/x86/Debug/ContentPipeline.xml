@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb</Output>
-      <Time>2014-01-01T00:15:08.9490596-08:00</Time>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb</Output>
+      <Time>2014-01-01T00:15:08-08:00</Time>
     </Item>
     <Item>
       <Source>playArea.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb</Output>
-      <Time>2014-01-01T00:14:30.9588867-08:00</Time>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb</Output>
+      <Time>2014-01-01T00:14:30-08:00</Time>
     </Item>
     <Item>
       <Source>nullBlock.png</Source>
@@ -25,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\nullBlock.xnb</Output>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\nullBlock.xnb</Output>
       <Time>2014-01-01T04:54:15-08:00</Time>
     </Item>
     <Item>
@@ -34,7 +34,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\bg.xnb</Output>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\bg.xnb</Output>
       <Time>2014-01-01T05:09:17-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -43,10 +43,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -75,7 +75,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2013-10-20T15:10:18.3536268-07:00</Value>
+        <Value>2013-10-18T21:22:51.6571468-07:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

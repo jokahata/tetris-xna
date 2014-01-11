@@ -8,3 +8,13 @@ C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\De
 C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb
 C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\nullBlock.xnb
 C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\bg.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\playArea.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\nullBlock.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\bg.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Tetris.exe
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Tetris.pdb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Tetris.exe
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Tetris.pdb

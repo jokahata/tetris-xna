@@ -1,1 +1,2 @@
 C:\Users\BabyGato\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\obj\x86\Debug\TetrisContent.contentprojResolveAssemblyReference.cache
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\TetrisContent\obj\x86\Debug\ResolveAssemblyReference.cache

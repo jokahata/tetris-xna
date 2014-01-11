@@ -228,6 +228,7 @@ namespace Tetris
         {
             //Check if on right edge of playArea
             if (sourceIndex + curPiece.getRightEdge() == xTiles - 1) { return true; }
+            //Check if an individual block is next to a block on the right
             for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
             {
                 for (int x = 0; x < curPiece.RowSize; x++)
@@ -240,7 +241,6 @@ namespace Tetris
                     }
                 }
             }
-            //TEMP
             return false;
 
         }
