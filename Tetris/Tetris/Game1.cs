@@ -388,8 +388,6 @@ namespace Tetris
 
         private Boolean checkCollisionLeft()
         {
-            //Check if on left edge of playArea
-            if ((sourceIndex % xTiles) + curPiece.getLeftEdge() == 0) { return true; }
             //Check if an individual block is next to a block on the left
             for (int y = 0; y < curPiece.getLength() / curPiece.RowSize; y++)
             {
@@ -397,7 +395,7 @@ namespace Tetris
                 {
                     // Finds left edge of that row
                     Boolean isLeftEdge = curPiece.getValueAtPoint(x + y * curPiece.RowSize) == 1 && (x == 0 || curPiece.getValueAtPoint(x - 1 + y * curPiece.RowSize) == 0);
-                    if (isLeftEdge && gameArray[sourceIndex + x - 1 + y * xTiles] != -1)
+                    if (isLeftEdge && (gameArray[sourceIndex + x - 1 + y * xTiles] != -1 || (sourceIndex + x) % xTiles == 0))
                     {
                         return true;
                     }
