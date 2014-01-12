@@ -57,6 +57,7 @@ namespace Tetris
         Boolean keyPressedDown = false;
 
         Boolean needNewPiece = true;
+        Boolean[] grabBag = new Boolean[7];
         //TODO:
 
         public Game1()
@@ -198,7 +199,7 @@ namespace Tetris
             // The player controlled piece
             if (needNewPiece)
             {
-                curPiece = new Piece(block0, 6);
+                getNewPiece();
                 needNewPiece = false;
             }
             //TODO: Change source index to spawner
@@ -219,6 +220,53 @@ namespace Tetris
             processKeyboard();
 
             base.Update(gameTime);
+        }
+
+        private void getNewPiece()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 6);
+            do
+            {
+                randomNumber = random.Next(0, 6);
+            } while (grabBag[randomNumber]);
+
+            switch (randomNumber)
+            {
+                case 0:
+                    curPiece = new Piece(block0, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 1:
+                    curPiece = new Piece(block1, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 2:
+                    curPiece = new Piece(block2, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 3:
+                    curPiece = new Piece(block3, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 4:
+                    curPiece = new Piece(block4, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 5:
+                    curPiece = new Piece(block5, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                case 6:
+                    curPiece = new Piece(block6, randomNumber);
+                    sourceIndex = 4;
+                    break;
+                default:
+                    Console.WriteLine("An incorrect integer was taken from the grab bag");
+                    break;
+            }
+
+
         }
 
         private void copyToStatArray()
@@ -281,6 +329,16 @@ namespace Tetris
             if (keyPressedUp && k.IsKeyUp(Keys.Up))
             {
                 keyPressedUp = false;
+            }
+
+            //Hard Drop
+            if (k.IsKeyDown(Keys.Space))
+            {
+                while (!checkCollisionDown())
+                {
+                    sourceIndex += xTiles;
+                }
+                needNewPiece = true;
             }
 
 
