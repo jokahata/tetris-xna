@@ -26,8 +26,9 @@ namespace Tetris
 
         static int blockSize;
 
-        //locArray will hold what blocks are on the board
-        int[] locArray;
+        //statArray (stationary array) will hold what blocks are on the board
+        int[] statArray;
+
         //gameArray will hold the current board in motion
         int[] gameArray;
         static int xTiles = 10;
@@ -85,17 +86,17 @@ namespace Tetris
             form.Location = new System.Drawing.Point(0, 0);
 
 
-            locArray = new int[xTiles * yTiles];
+            statArray = new int[xTiles * yTiles];
             gameArray = new int[xTiles * yTiles];
             // Represent empty location as -1
-            for (int i = 0; i < locArray.Length; i++)
+            for (int i = 0; i < statArray.Length; i++)
             {
-                locArray[i] = -1;
+                statArray[i] = -1;
 
             }
 
-            //Copy locArray to gameArray
-            Array.Copy(locArray, gameArray, xTiles * yTiles);
+            //Copy statArray to gameArray
+            Array.Copy(statArray, gameArray, xTiles * yTiles);
 
 
             // Tetris area variables
@@ -175,12 +176,14 @@ namespace Tetris
             //DropDown
             if (currentTime >= 1)
             {
+                printOutArray();
                 if (checkCollisionDown())
                 {
                     needNewPiece = true;
                     //TODO: Pick correct sourceIndex
                     sourceIndex = 0;
                     //TODO: Call line completion checker
+                    copyToStatArray();
                 }
                 else
                 {
@@ -189,7 +192,7 @@ namespace Tetris
                 }
             }
             // Reset gameArray
-            Array.Copy(locArray, gameArray, xTiles * yTiles);
+            Array.Copy(statArray, gameArray, xTiles * yTiles);
 
             //TODO: Add random bag
             // The player controlled piece
@@ -216,6 +219,11 @@ namespace Tetris
             processKeyboard();
 
             base.Update(gameTime);
+        }
+
+        private void copyToStatArray()
+        {
+            Array.Copy(gameArray, statArray, xTiles * yTiles);
         }
 
         private void processKeyboard()
@@ -330,7 +338,7 @@ namespace Tetris
                     //Check outside bounds of array
                     if (tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles) > xTiles * yTiles) { return true; }
                     //Check if piece is already there
-                    if (gameArray[tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] == 1) { return true; }
+                    if (statArray[tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] != -1) { return true; }
                 }
             }
             return false;
@@ -397,6 +405,27 @@ namespace Tetris
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void printOutArray()
+        {
+            Console.WriteLine("Restart");
+            for (int y = 0; y < yTiles; y++)
+            {
+                Console.WriteLine();
+                for (int x = 0; x < xTiles; x++)
+                {
+                    if (gameArray[y * xTiles + x] == -1)
+                    {
+                        Console.Write("7");
+                    }
+                    else
+                    {
+                        Console.Write(gameArray[y * xTiles + x]);
+                    }
+                    
+                }
+            }
         }
     }
 }
