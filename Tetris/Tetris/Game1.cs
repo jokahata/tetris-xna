@@ -192,7 +192,6 @@ namespace Tetris
             }
             
 
-            //TODO: Add random bag
             // The player controlled piece
             if (needNewPiece)
             {
@@ -230,16 +229,27 @@ namespace Tetris
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 6);
-            do
+            int attempts = 0;
+
+            while (grabBag[randomNumber])
             {
                 randomNumber = random.Next(0, 6);
-            } while (grabBag[randomNumber]);
+                attempts++;
+                if (attempts >= 6)
+                {
+                    for (int i = 0; i < grabBag.Length; i++)
+                    {
+                        grabBag[i] = false;
+                    }
+                }
+            }
+            grabBag[randomNumber] = true;
 
             switch (randomNumber)
             {
                 case 0:
                     curPiece = new Piece(block0, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 case 1:
                     curPiece = new Piece(block1, randomNumber);
@@ -247,23 +257,23 @@ namespace Tetris
                     break;
                 case 2:
                     curPiece = new Piece(block2, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 case 3:
                     curPiece = new Piece(block3, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 case 4:
                     curPiece = new Piece(block4, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 case 5:
                     curPiece = new Piece(block5, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 case 6:
                     curPiece = new Piece(block6, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;
                     break;
                 default:
                     Console.WriteLine("An incorrect integer was taken from the grab bag");
