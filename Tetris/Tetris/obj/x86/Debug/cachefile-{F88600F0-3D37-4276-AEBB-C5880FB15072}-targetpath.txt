@@ -2,3 +2,9 @@ Content\block0.xnb
 Content\playArea.xnb
 Content\nullBlock.xnb
 Content\bg.xnb
+Content\block1.xnb
+Content\block2.xnb
+Content\block3.xnb
+Content\block4.xnb
+Content\block5.xnb
+Content\block6.xnb

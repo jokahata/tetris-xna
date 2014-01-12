@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block0.xnb</Output>
-      <Time>2014-01-01T00:15:08-08:00</Time>
+      <Time>2014-01-11T17:56:49.9978543-08:00</Time>
     </Item>
     <Item>
       <Source>playArea.png</Source>
@@ -36,6 +36,60 @@
       <Options>None</Options>
       <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\bg.xnb</Output>
       <Time>2014-01-01T05:09:17-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block1.png</Source>
+      <Name>block1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block1.xnb</Output>
+      <Time>2014-01-11T17:52:28.2848852-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block2.png</Source>
+      <Name>block2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block2.xnb</Output>
+      <Time>2014-01-11T17:53:06.5840758-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block3.png</Source>
+      <Name>block3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block3.xnb</Output>
+      <Time>2014-01-11T17:53:45.6963129-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block4.png</Source>
+      <Name>block4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block4.xnb</Output>
+      <Time>2014-01-11T17:54:48.3628972-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block5.png</Source>
+      <Name>block5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block5.xnb</Output>
+      <Time>2014-01-11T17:55:37.6757177-08:00</Time>
+    </Item>
+    <Item>
+      <Source>block6.png</Source>
+      <Name>block6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block6.xnb</Output>
+      <Time>2014-01-11T17:56:20.6841777-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

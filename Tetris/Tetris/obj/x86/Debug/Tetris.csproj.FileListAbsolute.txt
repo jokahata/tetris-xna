@@ -18,3 +18,9 @@ C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x8
 C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Tetris.exe
 C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\obj\x86\Debug\Tetris.pdb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block1.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block2.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block3.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block4.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block5.xnb
+C:\Users\BlueLemonCat\Dropbox\MyProjects\C#\Projects\Tetris\Tetris\Tetris\bin\x86\Debug\Content\block6.xnb

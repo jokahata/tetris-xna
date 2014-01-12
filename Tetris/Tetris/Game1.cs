@@ -21,9 +21,6 @@ namespace Tetris
         SpriteBatch spriteBatch;
 
 
-
-
-
         static int blockSize;
 
         //statArray (stationary array) will hold what blocks are on the board
@@ -121,12 +118,12 @@ namespace Tetris
             playArea = Content.Load<Texture2D>("playArea");
             block0 = Content.Load<Texture2D>("block0");
             //TODO
-            block1 = Content.Load<Texture2D>("block0");
-            block2 = Content.Load<Texture2D>("block0");
-            block3 = Content.Load<Texture2D>("block0");
-            block4 = Content.Load<Texture2D>("block0");
-            block5 = Content.Load<Texture2D>("block0");
-            block6 = Content.Load<Texture2D>("block0");
+            block1 = Content.Load<Texture2D>("block1");
+            block2 = Content.Load<Texture2D>("block2");
+            block3 = Content.Load<Texture2D>("block3");
+            block4 = Content.Load<Texture2D>("block4");
+            block5 = Content.Load<Texture2D>("block5");
+            block6 = Content.Load<Texture2D>("block6");
             nullBlock = Content.Load<Texture2D>("nullBlock");
             background = Content.Load<Texture2D>("bg");
             getBounds();
