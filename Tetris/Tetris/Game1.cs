@@ -50,11 +50,12 @@ namespace Tetris
         Texture2D block0, block1, block2, block3, block4, block5, block6, nullBlock, background;
 
         //Booleans for keypresses
-        Boolean keyPressed = false;
         Boolean keyPressedRight = false;
         Boolean keyPressedLeft = false;
         Boolean keyPressedUp = false;
         Boolean keyPressedDown = false;
+        Boolean keyPressedSpace = false;
+
 
         Boolean needNewPiece = true;
         Boolean[] grabBag = new Boolean[7];
@@ -181,30 +182,38 @@ namespace Tetris
                 if (checkCollisionDown())
                 {
                     needNewPiece = true;
-                    //TODO: Pick correct sourceIndex
-                    sourceIndex = 0;
                     //TODO: Call line completion checker
-                    copyToStatArray();
                 }
                 else
                 {
                     sourceIndex += xTiles;
-                    currentTime--;
                 }
+                currentTime--;
             }
-            // Reset gameArray
-            Array.Copy(statArray, gameArray, xTiles * yTiles);
+            
 
             //TODO: Add random bag
             // The player controlled piece
             if (needNewPiece)
             {
+                copyToStatArray();
                 getNewPiece();
                 needNewPiece = false;
             }
             //TODO: Change source index to spawner
 
+            // Reset gameArray
+            Array.Copy(statArray, gameArray, xTiles * yTiles);
+
             /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
+            copyPieceOntoGameBoard();
+            processKeyboard();
+
+            base.Update(gameTime);
+        }
+
+        private void copyPieceOntoGameBoard()
+        {
             int arrLength = curPiece.getLength();
             for (int i = 0; i < arrLength; i++)
             {
@@ -215,11 +224,6 @@ namespace Tetris
                     gameArray[sourceIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] = curPiece.PieceID;
                 }
             }
-            /* */
-
-            processKeyboard();
-
-            base.Update(gameTime);
         }
 
         private void getNewPiece()
@@ -239,7 +243,7 @@ namespace Tetris
                     break;
                 case 1:
                     curPiece = new Piece(block1, randomNumber);
-                    sourceIndex = 4;
+                    sourceIndex = 3;    
                     break;
                 case 2:
                     curPiece = new Piece(block2, randomNumber);
@@ -316,8 +320,7 @@ namespace Tetris
             if (k.IsKeyDown(Keys.Up))
             {
                 //TODO: Rotation collision check
-                Console.WriteLine("KeyPressed: Up");
-                Console.WriteLine("Rotation is: " + curPiece.Rotation);
+
                 if (!keyPressedUp)
                 {
                     curPiece.rotateClockwise();
@@ -334,14 +337,26 @@ namespace Tetris
             //Hard Drop
             if (k.IsKeyDown(Keys.Space))
             {
-                while (!checkCollisionDown())
+                if (!keyPressedSpace)
                 {
-                    sourceIndex += xTiles;
+                    while (!checkCollisionDown())
+                    {
+                        sourceIndex += xTiles;
+                    }
+                    Array.Copy(statArray, gameArray, xTiles * yTiles);
+                    currentTime = 0;
+                    copyPieceOntoGameBoard();
+                    copyToStatArray();
+                    needNewPiece = true;
+                    keyPressedSpace = true;
                 }
-                needNewPiece = true;
             }
 
-
+            //Release space
+            if (keyPressedSpace && k.IsKeyUp(Keys.Space))
+            {
+                keyPressedSpace = false;
+            }
         }
 
         private Boolean checkCollisionRight()
@@ -394,7 +409,7 @@ namespace Tetris
                 if (curPiece.getValueAtPoint(i) == 1)
                 {
                     //Check outside bounds of array
-                    if (tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles) > xTiles * yTiles) { return true; }
+                    if (tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles) >= xTiles * yTiles) { return true; }
                     //Check if piece is already there
                     if (statArray[tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] != -1) { return true; }
                 }
