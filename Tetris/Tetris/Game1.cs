@@ -53,7 +53,7 @@ namespace Tetris
         Boolean keyPressedDown = false;
         Boolean keyPressedSpace = false;
 
-
+        Boolean run = true;
         Boolean needNewPiece = true;
         Boolean[] grabBag = new Boolean[7];
         //TODO:
@@ -171,40 +171,42 @@ namespace Tetris
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
-            //DropDown
-            if (currentTime >= 1)
+            if (run)
             {
-                printOutArray();
-                if (checkCollisionDown())
+                currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
+                //DropDown
+                if (currentTime >= 1)
                 {
-                    needNewPiece = true;
-                    //TODO: Call line completion checker
+                    //printOutArray();
+                    if (checkCollisionDown())
+                    {
+                        needNewPiece = true;
+                        //TODO: Call line completion checker
+                    }
+                    else
+                    {
+                        sourceIndex += xTiles;
+                    }
+                    currentTime--;
                 }
-                else
+
+
+                // The player controlled piece
+                if (needNewPiece)
                 {
-                    sourceIndex += xTiles;
+                    copyToStatArray();
+                    getNewPiece();
+                    needNewPiece = false;
                 }
-                currentTime--;
+                //TODO: Change source index to spawner
+
+                // Reset gameArray
+                Array.Copy(statArray, gameArray, xTiles * yTiles);
+
+                /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
+                copyPieceOntoGameBoard();
             }
-            
-
-            // The player controlled piece
-            if (needNewPiece)
-            {
-                copyToStatArray();
-                getNewPiece();
-                needNewPiece = false;
-            }
-            //TODO: Change source index to spawner
-
-            // Reset gameArray
-            Array.Copy(statArray, gameArray, xTiles * yTiles);
-
-            /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
-            copyPieceOntoGameBoard();
             processKeyboard();
-
             base.Update(gameTime);
         }
 
@@ -213,7 +215,6 @@ namespace Tetris
             int arrLength = curPiece.getLength();
             for (int i = 0; i < arrLength; i++)
             {
-
                 if (curPiece.getValueAtPoint(i) == 1)
                 {
                     //Offsets it 
@@ -291,8 +292,6 @@ namespace Tetris
             //Move right
             if (k.IsKeyDown(Keys.Right))
             {
-                Console.WriteLine("KeyPressed: Right");
-                //TODO: Check for boundaries. Maybe another array with rightmost
                 //TODO: Add timer for when key is pressed so that scrolling happens
                 if (!keyPressedRight && !checkCollisionRight())
                 {
@@ -330,7 +329,8 @@ namespace Tetris
 
                 if (!keyPressedUp)
                 {
-                    curPiece.rotateClockwise();
+                    //curPiece.rotateClockwise();
+                    tryRotating();
                     keyPressedUp = true;
                 }
             }
@@ -363,6 +363,12 @@ namespace Tetris
             if (keyPressedSpace && k.IsKeyUp(Keys.Space))
             {
                 keyPressedSpace = false;
+            }
+
+            //Pause
+            if (k.IsKeyDown(Keys.P))
+            {
+                run = !run;
             }
         }
 
@@ -406,22 +412,114 @@ namespace Tetris
 
         private Boolean checkCollisionDown()
         {
+            //TODO: Possibly generalize this because similar to hasCollision
             int tempIndex = sourceIndex + xTiles;
             int arrLength = curPiece.getLength();
             for (int i = 0; i < arrLength; i++)
             {
-
+                int curIndex = tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles);
                 if (curPiece.getValueAtPoint(i) == 1)
                 {
                     //Check outside bounds of array
-                    if (tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles) >= xTiles * yTiles) { return true; }
+                    if (curIndex >= xTiles * yTiles) { return true; }
                     //Check if piece is already there
-                    if (statArray[tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles)] != -1) { return true; }
+                    if (statArray[curIndex] != -1) { return true; }
                 }
             }
             return false;
         }
 
+        /// <summary>
+        /// Check rotation and use the simple implementation of wallkicks
+        /// </summary>
+        /// <returns></returns>
+        private void tryRotating()
+        {
+            //Straight block has different test cases
+            Console.WriteLine();
+            if (!hasCollision(0, 0)) {
+                curPiece.rotateClockwise();
+
+            }
+            else if (!hasCollision(-1, 0) )
+            {
+                curPiece.rotateClockwise();
+                sourceIndex--;
+            }
+            else if (!hasCollision(1, 0))
+            {
+                curPiece.rotateClockwise();
+                sourceIndex++;
+            }
+            else
+            {
+                //Fail to rotate
+            }
+        }
+
+        /// <summary>
+        /// Helper method for checkRotationCollision
+        /// </summary>
+        /// <param name="x">The offset horizontally</param>
+        /// <param name="y">The offset vertically</param>
+        /// <returns>True if there is a collision, false otherwise</returns>
+        private Boolean hasCollision(int x, int y)
+        {
+            
+            int arrLength = curPiece.getLength();
+            int tempIndex = sourceIndex + x + y * xTiles;
+            
+            //Check if rotation throws the piece outside the game area
+            int prevLeftEdge = curPiece.getLeftEdge();
+            int prevRightEdge = curPiece.getRightEdge();
+            curPiece.rotateClockwise();
+
+            //Check if the offset throws the piece off the board
+            if (x < 0 && (tempIndex + prevLeftEdge) % xTiles > (sourceIndex + prevLeftEdge) % xTiles || x > 0 && tempIndex % xTiles < sourceIndex % xTiles)
+            {
+                curPiece.rotateCounterClockwise();
+                return true;
+            }
+
+            int half = xTiles / 2;
+            
+            
+            if ((tempIndex + prevLeftEdge) % xTiles < half && ((tempIndex + curPiece.getLeftEdge()) % xTiles) > half)
+            {
+                curPiece.rotateCounterClockwise();
+                return true;
+            }
+            
+            if ((tempIndex + prevRightEdge) % xTiles > half && ((tempIndex + curPiece.getRightEdge()) % xTiles) < half)
+            {
+                curPiece.rotateCounterClockwise();
+                return true;
+            }
+
+
+            for (int i = 0; i < arrLength; i++)
+            {
+                if (curPiece.getValueAtPoint(i) == 1)
+                {
+                    //Offsets it
+                    //Check outside bounds of array
+                    int curIndex = tempIndex + (i % curPiece.RowSize) + ((i / curPiece.RowSize) * xTiles);
+                    if (curIndex >= xTiles * yTiles) 
+                    {
+                        curPiece.rotateCounterClockwise();
+                        return true;
+                    }
+                    //Check if there is already a piece there
+                    if (statArray[curIndex] != -1)
+                    {
+                        curPiece.rotateCounterClockwise();
+                        return true;
+                    } 
+                }
+            }
+            curPiece.rotateCounterClockwise();
+            return false;
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>

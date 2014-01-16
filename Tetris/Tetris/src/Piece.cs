@@ -208,7 +208,7 @@ namespace Tetris.src
 
         public void rotateCounterClockwise()
         {
-            if (rotation == 0) { rotation = 0; }
+            if (rotation == 0) { rotation = 3; }
             else rotation -= 1;
         }
 
