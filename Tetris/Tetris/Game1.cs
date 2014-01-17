@@ -117,7 +117,7 @@ namespace Tetris
 
             playArea = Content.Load<Texture2D>("playArea");
             block0 = Content.Load<Texture2D>("block0");
-            //TODO
+            //TODO: Make prettier blocks
             block1 = Content.Load<Texture2D>("block1");
             block2 = Content.Load<Texture2D>("block2");
             block3 = Content.Load<Texture2D>("block3");
@@ -181,6 +181,7 @@ namespace Tetris
                     if (checkCollisionDown())
                     {
                         needNewPiece = true;
+                        checkLineCompletion();
                         //TODO: Call line completion checker
                     }
                     else
@@ -194,20 +195,65 @@ namespace Tetris
                 // The player controlled piece
                 if (needNewPiece)
                 {
-                    copyToStatArray();
+                    copyGameArrayToStatArray();
                     getNewPiece();
                     needNewPiece = false;
                 }
                 //TODO: Change source index to spawner
 
                 // Reset gameArray
-                Array.Copy(statArray, gameArray, xTiles * yTiles);
+                copyStatArrayToGameArray();
 
                 /* LOGIC: COPY PIECE ARRAY ONTO GAME BOARD */
                 copyPieceOntoGameBoard();
             }
             processKeyboard();
             base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Checks if lines are completed, deletes them and shifts blocks down
+        /// </summary>
+        private void checkLineCompletion()
+        {
+            //TODO: Optimize by running on multiple lines
+            int linesDeleted = 0;
+            //Index of first deleted line
+            int startIndex = 0;
+            for (int y = 0; y < yTiles; y++)
+            {
+                Boolean isLineComplete = true;
+                for (int x = 0; x < xTiles; x++)
+                {
+                    int index = x + (y * xTiles);
+                    if (statArray[index] == -1)
+                    {
+                        isLineComplete = false;
+                    }
+                }
+                if (isLineComplete)
+                {
+                    if (linesDeleted == 0)
+                    {
+                        startIndex = y * xTiles;
+                    }
+                    linesDeleted++;
+                }
+                if (linesDeleted > 0 && (!isLineComplete || y == yTiles - 1))
+                {
+                    deleteLinesAndShift(linesDeleted, startIndex);
+                    copyStatArrayToGameArray();
+                    linesDeleted = 0;
+                    startIndex = 0;
+                }
+            }
+        }
+
+        private void deleteLinesAndShift(int lines, int startIndex)
+        {
+            int[] tempArray = new int[xTiles * yTiles];
+            Array.Copy(statArray, tempArray, xTiles * yTiles);
+            Array.Copy(tempArray, 0, statArray, lines * xTiles, startIndex);
         }
 
         private void copyPieceOntoGameBoard()
@@ -231,7 +277,7 @@ namespace Tetris
 
             while (grabBag[randomNumber])
             {
-                randomNumber = random.Next(0, 6);
+                randomNumber = random.Next(0, 7);
                 attempts++;
                 if (attempts >= 6)
                 {
@@ -281,9 +327,14 @@ namespace Tetris
 
         }
 
-        private void copyToStatArray()
+        private void copyGameArrayToStatArray()
         {
             Array.Copy(gameArray, statArray, xTiles * yTiles);
+        }
+
+        private void copyStatArrayToGameArray()
+        {
+            Array.Copy(statArray, gameArray, xTiles * yTiles);
         }
 
         private void processKeyboard()
@@ -325,11 +376,9 @@ namespace Tetris
             //Rotate
             if (k.IsKeyDown(Keys.Up))
             {
-                //TODO: Rotation collision check
 
                 if (!keyPressedUp)
                 {
-                    //curPiece.rotateClockwise();
                     tryRotating();
                     keyPressedUp = true;
                 }
@@ -341,6 +390,25 @@ namespace Tetris
                 keyPressedUp = false;
             }
 
+            //Soft Drop
+            if (k.IsKeyDown(Keys.Down))
+            {
+                if (!keyPressedDown)
+                {
+                    keyPressedDown = true;
+                    if (!checkCollisionDown())
+                    {
+                        sourceIndex += xTiles;
+                    }
+                }
+            }
+
+            if (keyPressedDown && k.IsKeyUp(Keys.Down))
+            {
+                keyPressedDown = false;
+            }
+
+
             //Hard Drop
             if (k.IsKeyDown(Keys.Space))
             {
@@ -350,10 +418,11 @@ namespace Tetris
                     {
                         sourceIndex += xTiles;
                     }
-                    Array.Copy(statArray, gameArray, xTiles * yTiles);
+                    copyStatArrayToGameArray();
                     currentTime = 0;
                     copyPieceOntoGameBoard();
-                    copyToStatArray();
+                    copyGameArrayToStatArray();
+                    checkLineCompletion();
                     needNewPiece = true;
                     keyPressedSpace = true;
                 }
@@ -436,7 +505,6 @@ namespace Tetris
         private void tryRotating()
         {
             //Straight block has different test cases
-            Console.WriteLine();
             if (!hasCollision(0, 0)) {
                 curPiece.rotateClockwise();
 
@@ -536,8 +604,6 @@ namespace Tetris
             // Draw out pieces on board
             for (int i = 0; i < xTiles * yTiles; i++)
             {
-                //TODO: Add piece drawing
-                //TODO: Offset the drawing because of the invisible tiles above
 
                 Texture2D correctTexture = nullBlock;
                 Vector2 loc = new Vector2(marginX + (i % xTiles) * blockSize, marginY + ((i - 2 * xTiles) / xTiles) * blockSize);
@@ -548,7 +614,6 @@ namespace Tetris
                     case 0:
                         correctTexture = block0;
                         break;
-                    //TODO: Put other blocks
                     case 1:
                         correctTexture = block1;
                         break;
@@ -577,31 +642,31 @@ namespace Tetris
                     spriteBatch.Draw(correctTexture, loc, Color.White);
                 }
             }
-            //TODO: Go through a separate array for blocks. When done moving, take in the pieces and add them to the array, keeping track of the color
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        private void printOutArray()
+        private void printOutArray(int[] arr, String arrayName)
         {
-            Console.WriteLine("Restart");
+            Console.WriteLine("Printing out: " + arrayName);
             for (int y = 0; y < yTiles; y++)
             {
-                Console.WriteLine();
+                
                 for (int x = 0; x < xTiles; x++)
                 {
-                    if (gameArray[y * xTiles + x] == -1)
+                    if (arr[y * xTiles + x] == -1)
                     {
                         Console.Write("7");
                     }
                     else
                     {
-                        Console.Write(gameArray[y * xTiles + x]);
-                    }
-                    
+                        Console.Write(arr[y * xTiles + x]);
+                    }   
                 }
+                Console.WriteLine();
             }
+            Console.WriteLine();
         }
     }
 }
